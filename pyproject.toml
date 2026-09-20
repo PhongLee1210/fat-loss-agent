@@ -13,8 +13,12 @@ dependencies = [
 ]
 
 [project.scripts]
-fat-loss-agent = "fat_loss_agent.channels.cli:main"
+fat-loss-agent = "src.channels.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.10.12,<0.11.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "src"
+module-root = ""

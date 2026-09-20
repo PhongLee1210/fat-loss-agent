@@ -4,8 +4,8 @@ import sys
 
 from langchain.messages import HumanMessage, SystemMessage
 
-from fat_loss_agent.agent import build_agent
-from fat_loss_agent.instructions import load_instructions
+from ..agent import build_agent
+from ..instructions import load_instructions
 
 
 def main() -> None:

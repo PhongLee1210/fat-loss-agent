@@ -11,7 +11,7 @@ fat-loss-agent/
 ├── instructions.md                 # Managed context: domain rules live here, not in code
 ├── skills/
 │   └── tracking/SKILL.md           # Managed skill: logging procedure
-├── src/fat_loss_agent/
+├── src/
 │   ├── agent.py                    # Core agent definition (plan -> execute -> reflect graph)
 │   ├── state.py                    # Graph state (TypedDict + reducers)
 │   ├── config.py                   # Model factory (env-driven, OpenAI-compatible)
@@ -34,8 +34,9 @@ fat-loss-agent/
 ```
 
 Naming convention: code modules are structural (`agent`, `state`, `memory`,
-`channels`); business naming and domain rules live only in managed context
-(`instructions.md`, `skills/`, `evals/`).
+`channels`) with relative imports inside `src/`; business naming and domain
+rules live only in managed context (`instructions.md`, `skills/`, `evals/`).
+Import root is `src` (e.g., `from src.agent import build_agent`).
 
 ## Graph
 
@@ -49,9 +50,9 @@ START -> plan -> execute -> reflect --(not satisfied & retries < 3)--> plan
 
 | Pattern (patterns/*.md) | Construct | Code |
 |---|---|---|
-| plan-then-execute-pattern.md | `StateGraph`: plan node -> execute node, frozen plan | `src/fat_loss_agent/agent.py` |
-| structured-output-specification.md | `.with_structured_output()` + Pydantic (next: `Plan`, `Reflection`) | `agent.py` slots + `tools/` |
-| reflection.md | conditional edge back to plan, retry budget 3 | `agent.py` (`should_retry`) |
+| plan-then-execute-pattern.md | `StateGraph`: plan node -> execute node, frozen plan | `src/agent.py` |
+| structured-output-specification.md | `.with_structured_output()` + Pydantic (next: `Plan`, `Reflection`) | `src/agent.py` slots + `src/tools/` |
+| reflection.md | conditional edge back to plan, retry budget 3 | `src/agent.py` (`should_retry`) |
 
 ## Setup
 

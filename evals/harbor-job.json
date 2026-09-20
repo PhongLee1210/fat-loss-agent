@@ -1,7 +1,7 @@
 {
   "runner": "harbor",
   "agent": {
-    "entrypoint": "fat_loss_agent.channels.cli:main"
+    "entrypoint": "src.channels.cli:main"
   },
   "tasks": ["log-meal"]
 }

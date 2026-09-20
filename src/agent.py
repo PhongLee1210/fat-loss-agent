@@ -19,7 +19,7 @@ from typing import Literal
 
 from langgraph.graph import END, START, StateGraph
 
-from fat_loss_agent.state import AgentState
+from .state import AgentState
 
 MAX_RETRIES = 3
 
