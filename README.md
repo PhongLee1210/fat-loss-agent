@@ -29,6 +29,9 @@ fat-loss-agent/
 ├── evals/                          # Harbor workspace
 │   ├── harbor-job.json
 │   └── log-meal/                   # Task: Task.md, instruction.md, environment/, tests/
+├── supabase/                       # Database (Supabase CLI)
+│   ├── config.toml
+│   └── migrations/                 # fitness_schema.sql: 3-layer schema
 ├── pyproject.toml                  # Dependencies (uv)
 └── .env.example                    # Local + deploy secrets template
 ```
@@ -63,6 +66,28 @@ cp .env.example .env   # defaults: local Qwen via Ollama
 
 Providers (all OpenAI-compatible, switch via `.env`): Ollama (default),
 LM Studio, OpenAI, DeepSeek — see `.env.example`.
+
+## Database
+
+Schema in `supabase/migrations/`, organized in three layers:
+
+- **Reference** (shared knowledge): `metric_types`, `foods` (per-100g) +
+  `portions`, `exercises`, `mets`
+- **Facts** (immutable user events, insert-only): `users`, `goals`,
+  `measurements` (generic metric observations), `meal_sessions`/`meal_items`
+  (macros snapshotted at logging time), `workout_sessions` +
+  `strength_sets`/`cardio_logs`
+- **Derived** (recomputable): `daily_targets` (formula + frozen inputs),
+  `daily_summaries` view (consumed/burned/remaining)
+
+Scalability rule: new tracked metric = 1 insert into `metric_types`; new goal
+type = 1 insert into `goals`; strength/cardio structure already in place.
+
+```bash
+supabase start      # local stack (Docker)
+supabase db reset   # re-apply migrations from scratch
+supabase stop       # stop the stack
+```
 
 ## Run
 
