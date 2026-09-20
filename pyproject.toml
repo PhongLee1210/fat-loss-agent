@@ -1,0 +1,20 @@
+[project]
+name = "fat-loss-agent"
+version = "0.1.0"
+description = "Nutrition + workout tracking agent for learning Tier-1 agentic patterns (plan-then-execute, structured output, reflection)"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "langchain>=1.4.2",
+    "langchain-openai>=1.6.2",
+    "langgraph>=1.2.11",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+]
+
+[project.scripts]
+fat-loss-agent = "fat_loss_agent.channels.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.10.12,<0.11.0"]
+build-backend = "uv_build"
